@@ -55,14 +55,14 @@ async function getDataByCommand(command) {
       (row) => row[0] && row[0].toLowerCase() === `/${command}`.toLowerCase()
     );
     if (!foundRow) {
-      return `❌ [TEST] Tidak ditemukan data untuk perintah *${command}*`;
+      return `❌ Tidak ditemukan data untuk perintah *${command}*`;
     }
     const dataText = foundRow[1] || "(kosong)";
     const note = foundRow[2] ? `\n📝 Catatan: ${foundRow[2]}` : "";
-    return `📄 [TEST] *${command.toUpperCase()}*\n\n${dataText}${note}`;
+    return `📄 *${command.toUpperCase()}*\n\n${dataText}${note}`;
   } catch (err) {
     console.error("❌ ERROR getDataByCommand:", err.message);
-    return "⚠️ [TEST] Terjadi kesalahan saat mengambil data dari Google Sheets.";
+    return "⚠️ Terjadi kesalahan saat mengambil data dari Google Sheets.";
   }
 }
 
@@ -76,7 +76,7 @@ bot.on("message", async (message) => {
   if (text === "/start") {
     bot.sendMessage(
       chatId,
-      `👋 [TEST] Halo ${message.from.first_name}! Ketik /help untuk melihat daftar perintah.`,
+      `👋 Halo ${message.from.first_name}! Ketik /help untuk melihat daftar perintah.`,
       { parse_mode: "Markdown" }
     );
   } else if (text === "/help") {
@@ -85,7 +85,7 @@ bot.on("message", async (message) => {
       .filter((row) => row[0] && row[0].startsWith("/"))
       .map((row) => row[0])
       .join("\n");
-    bot.sendMessage(chatId, `📘 [TEST] *Daftar Perintah:*\n${commands}`, {
+    bot.sendMessage(chatId, `📘 *Daftar Perintah:*\n${commands}`, {
       parse_mode: "Markdown",
     });
   } else if (text.startsWith("/")) {
@@ -107,7 +107,7 @@ bot.on("polling_error", (err) => {
     await bot.deleteWebHook({ drop_pending_updates: true });
     // Start long polling
     await bot.startPolling();
-    console.log("✅ [TEST] Bot INCES aktif (polling mode)");
+    console.log("✅ Bot INCES aktif (polling mode)");
   } catch (err) {
     console.error("❌ Gagal start bot:", err.message);
     process.exit(1);
